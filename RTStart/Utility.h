@@ -40,16 +40,16 @@ template <typename T> struct list {
 	list<T>(list<T> _list) { count = _list.count; head = _list.head; tail = _list.tail; };
 
 	//adds a bin<T> to the end of the list
-	template <typename T> void add(shared_ptr<bin<T>> _bin);
+	void add(shared_ptr<bin<T>> _bin);
 
 	//overload, makes a bin* and calls add(shared_ptr<bin<T>>)
-	template <typename T> void add(T _item);
+	void add(T _item);
 
 	//removes a specified bin from the list
-	template <typename T> void remove(shared_ptr<bin<T>> _bin, bool del = false);
+	void remove(shared_ptr<bin<T>> _bin, bool del = false);
 
 	//find in list
-	template <typename T>shared_ptr<bin<T>> findByID(int _id);
-	template <typename T> shared_ptr<bin<T>> findByItem(T _item);
+	shared_ptr<bin<T>> findByID(int _id);
+	shared_ptr<bin<T>> findByItem(T _item);
 
 };
