@@ -1,0 +1,104 @@
+#include "Utility.h"
+
+//---------------< dVector >-----------------
+double dVector::returnDistance() {
+	double x2 = x * x;
+	double y2 = y * y;
+	return sqrt(x2 + y2);
+}
+void dVector::normalize() {
+	double temp = returnDistance();
+	x /= temp;
+	y /= temp;
+}
+
+dVector dVector::returnNormal() {
+	dVector temp = dVector(x, y);
+	temp.normalize();
+	return temp;
+}
+
+//---------------------< doubly linked list >--------------------------
+template <typename T> void list<T>::add(shared_ptr<bin<T>> _bin) {
+	_bin->ID = count;
+	count++;
+
+	//if first item in list
+	if (!head) {
+		head = _bin;
+		tail = head;
+	}
+	else {//if 1 + Nth item
+		if (tail) {
+			tail->next = _bin;
+			_bin->prev = tail;
+			tail = _bin;
+		}
+		else {
+			//throw some error
+			bool doNothing = true;
+		}
+	}
+}
+
+template <typename T> void list<T>::add(T _item) {
+	add(make_shared<bin<T>>(bin<T>(_item)));
+}
+
+template<typename T> void list<T>::remove(shared_ptr<bin<T>> _bin, bool del){
+	//if only
+	if (tail == _bin && head == _bin) {
+		head = nullptr;
+		tail = nullptr;
+	}
+	//if head
+	else if (head == _bin) {
+		_bin->next->prev = nullptr;
+		head = _bin->next;
+	}
+	//if tail
+	else if (tail == _bin) {
+		tail->prev->next = nullptr;
+		tail = _bin->prev;
+	}
+	//if middle
+	else {
+		_bin->prev->next = _bin->next;
+		_bin->next->prev = _bin->prev;
+	}
+	if (del) {
+		delete& _bin;
+	}
+}
+
+template<typename T> shared_ptr<bin<T>> list<T>::findByID(int _id)
+{
+	shared_ptr<bin<T>> currentBin = head;
+	while (currentBin) {
+		if (currentBin->ID == _id) {
+			return currentBin;
+		}
+		else {
+			currentBin = currentBin->next;
+		}
+	}
+
+	//if not found
+	return nullptr;
+}
+
+template<typename T> shared_ptr<bin<T>> list<T>::findByItem(T _item)
+{
+	shared_ptr<bin<T>> currentBin = head;
+	while (currentBin) {
+		if (currentBin->item == _item) {
+			return currentBin;
+		}
+		else {
+			currentBin = currentBin->next;
+		}
+	}
+
+	//if not found
+	return nullptr;
+}
