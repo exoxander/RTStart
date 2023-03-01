@@ -1,19 +1,19 @@
 #include "Utility.h"
 
-//---------------< dVector >-----------------
-double dVector::returnDistance() {
-	double x2 = x * x;
-	double y2 = y * y;
+//---------------< fVector >-----------------
+float fVector::returnDistance() {
+	float x2 = x * x;
+	float y2 = y * y;
 	return sqrt(x2 + y2);
 }
-void dVector::normalize() {
-	double temp = returnDistance();
+void fVector::normalize() {
+	float temp = returnDistance();
 	x /= temp;
 	y /= temp;
 }
 
-dVector dVector::returnNormal() {
-	dVector temp = dVector(x, y);
+fVector fVector::returnNormal() {
+	fVector temp = fVector(x, y);
 	temp.normalize();
 	return temp;
 }

@@ -1,23 +1,36 @@
 #pragma once
 #include <memory>
+#include <string>
+#include <vector>
 using std::shared_ptr;
 using std::make_shared;
-struct dVector {
-	double x;
-	double y;
-	dVector(double _x, double _y) { x = _x; y = _y; };
-	void add(dVector _input) { x += _input.x; y += _input.y; };
-	void add(double _x, double _y) { x += _x; y += _y; };
-	void subtract(dVector _input) { x -= _input.x; y -= _input.y; };
-	void subtract(double _x, double _y) { x -= _x; y -= _y; };
-	void multiply(dVector _input) { x *= _input.x; y *= _input.y; };
-	void multiply(double _input) { x *= _input; y *= _input; };
-	double returnDistance();
+
+//--------------------< fVector >---------------------
+struct fVector {
+	float x;
+	float y;
+	fVector(float _x, float _y) { x = _x; y = _y; };
+	void add(fVector _input) { x += _input.x; y += _input.y; };
+	void add(float _x, float _y) { x += _x; y += _y; };
+	void subtract(fVector _input) { x -= _input.x; y -= _input.y; };
+	void subtract(float _x, float _y) { x -= _x; y -= _y; };
+	void multiply(fVector _input) { x *= _input.x; y *= _input.y; };
+	void multiply(float _input) { x *= _input; y *= _input; };
+	float returnDistance();
 	void normalize();
-	dVector returnNormal();
+	fVector returnNormal();
 };
 
 //--------------------< iVector >---------------------
+struct iVector {
+	int x;
+	int y;
+	iVector(int _x, int _y) { x = _x; y = _y; };
+	void add(iVector _input) { x += _input.x; y += _input.y; };
+	void add(int _x, int _y) { x += _x; y += _y; };
+	void subtract(iVector _input) { x -= _input.x; y -= _input.y; };
+	void subtract(int _x, int _y) { x -= _x; y -= _y; };
+};
 
 //---------------------< bin >----------------------------
 template <typename T> struct bin {
@@ -28,16 +41,21 @@ template <typename T> struct bin {
 };
 
 //---------------------< 2x list >--------------------------------
-template <typename T> struct list {
+template <typename T> class list {
+private:
 	int count;
 	shared_ptr<bin<T>> head;
 	shared_ptr<bin<T>> tail;
 
+public:
 	//default constructor
 	list<T>() { count = 0; head = nullptr; tail = nullptr; };
 
-	//copy constructor
+	//copy constructor, shallow
 	list<T>(list<T> _list) { count = _list.count; head = _list.head; tail = _list.tail; };
+
+	//deep copy of lists
+	list<T> copy();
 
 	//adds a bin<T> to the end of the list
 	void add(shared_ptr<bin<T>> _bin);
@@ -52,4 +70,50 @@ template <typename T> struct list {
 	shared_ptr<bin<T>> findByID(int _id);
 	shared_ptr<bin<T>> findByItem(T _item);
 
+	//insert
+
+	//swap
+
+	//removebyid
+
+	//remove by item
+
+};
+
+class GameObjectHashTable {
+private:
+	//Prime number used for array size, hash function is just mod on ID
+	const int p = 4093;
+
+	//table is an array of lists, on hash collision, push to back
+	list<GameObject>* table = new list<GameObject>[p];
+
+public:
+	//add a given object to the list
+	void add(GameObject _object);
+	//remove the object from the list 
+	void destroy(GameObject _object);
+	GameObject* get(unsigned long _ID);
+};
+
+class GameObject {
+private:
+	//must be unique, ID of 0 means error
+	//readonly after creation
+	unsigned long ID;
+public:
+	//any old string, probably used for debug info
+	std::string name;
+	unsigned long getID() { return ID; };
+
+	//default constructor
+	GameObject() { ID = 0; name = "Default_Object"; };
+
+	//genereic constructor
+	GameObject(int _ID, std::string _name = "Unnamed_Object") { ID = _ID; name = _name; };
+
+	//extend with physics info
+	//extend with mesh info
+	//extend with sprite info
+	//extend with user interfaceable
 };
