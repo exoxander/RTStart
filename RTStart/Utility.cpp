@@ -18,12 +18,12 @@ fVector fVector::returnNormal() {
 	return temp;
 }
 
-//---------------------< doubly linked list >--------------------------
-template <typename T> void list<T>::add(shared_ptr<bin<T>> _bin) {
+//---------------------< doubly linked List >--------------------------
+template <typename T> void List<T>::add(shared_ptr<bin<T>> _bin) {
 	_bin->ID = count;
 	count++;
 
-	//if first item in list
+	//if first item in List
 	if (!head) {
 		head = _bin;
 		tail = head;
@@ -41,11 +41,11 @@ template <typename T> void list<T>::add(shared_ptr<bin<T>> _bin) {
 	}
 }
 
-template <typename T> void list<T>::add(T _item) {
+template <typename T> void List<T>::add(T _item) {
 	add(make_shared<bin<T>>(bin<T>(_item)));
 }
 
-template<typename T> void list<T>::remove(shared_ptr<bin<T>> _bin, bool del){
+template<typename T> void List<T>::remove(shared_ptr<bin<T>> _bin, bool del){
 	//if only
 	if (tail == _bin && head == _bin) {
 		head = nullptr;
@@ -71,7 +71,7 @@ template<typename T> void list<T>::remove(shared_ptr<bin<T>> _bin, bool del){
 	}
 }
 
-template<typename T> shared_ptr<bin<T>> list<T>::findByID(int _id)
+template<typename T> shared_ptr<bin<T>> List<T>::findByBinID(int _id)
 {
 	shared_ptr<bin<T>> currentBin = head;
 	while (currentBin) {
@@ -87,7 +87,7 @@ template<typename T> shared_ptr<bin<T>> list<T>::findByID(int _id)
 	return nullptr;
 }
 
-template<typename T> shared_ptr<bin<T>> list<T>::findByItem(T _item)
+template<typename T> shared_ptr<bin<T>> List<T>::findByItem(T _item)
 {
 	shared_ptr<bin<T>> currentBin = head;
 	while (currentBin) {
