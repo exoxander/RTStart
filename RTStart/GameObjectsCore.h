@@ -46,9 +46,11 @@ enum class ModuleType {
 };
 
 class Module {
+private:
+	ModuleType type;
 public:
 	unsigned long parent;
-	ModuleType type;
+	ModuleType getType() { return type; };
 
 	Module() { parent = 0; type = ModuleType::none; };
 	Module(unsigned long _parent, ModuleType _type) { parent = _parent; type = _type; };

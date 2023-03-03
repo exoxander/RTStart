@@ -27,6 +27,9 @@
     <ClInclude Include="Modules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MeshCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
