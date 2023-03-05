@@ -42,7 +42,9 @@ enum class ModuleType {
 	mesh,
 	sprite,
 	ui,
-	simpleCollider
+	simpleCollider,
+	trigger,
+	effect
 };
 
 class Module {
@@ -50,7 +52,9 @@ private:
 	ModuleType type;
 public:
 	unsigned long parent;
+	unsigned int ID;
 	ModuleType getType() { return type; };
+	//use enum list to tag properties of module instead of ModuleType?
 
 	Module() { parent = 0; type = ModuleType::none; };
 	Module(unsigned long _parent, ModuleType _type) { parent = _parent; type = _type; };

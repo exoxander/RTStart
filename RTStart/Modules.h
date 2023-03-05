@@ -2,6 +2,30 @@
 #include "GameObjectsCore.h"
 #include "MeshCore.h"
 
+//----------------< Effect Module >------------------
+// this module is particularly versetile, likely to have an expansive list of child classes
+class Effect :Module {
+	//can effect only trigger once in the objects lifetime?
+	bool canReactivate;
+	//can effect activate multiple times in a single step?
+	bool canMultiActivate;
+	bool isActive;
+};
+//----------------< Trigger Module >------------------
+class Trigger : Module {
+public:
+	//does trigger only fire once in the objects lifetime?
+	bool canRetrigger;
+	//can the trigger fire multiple times per step?
+	bool canMultiTrigger;
+	bool isTriggered;
+
+	//each step, send all "triggered" modules to a list (hash table?) search for active triggers there.
+	//store as the module IDs
+	int* triggers;
+	int* effects;
+};
+
 //--------------< Physics Module >-----------------
 class PhysicsModule :Module {
 public:
@@ -17,22 +41,21 @@ public:
 class SimpleColliderModule :Module {
 public:
 	fVector dimension;
-	bool isCircle;//set false to use as rectangle
-	bool isTrigger;
+	bool isCollider;//set false to use as rectangle
 
 	SimpleColliderModule() :Module(0, ModuleType::simpleCollider) {};
-	SimpleColliderModule(unsigned long _parent) :Module(_parent, ModuleType::simpleCollider) {};
+	SimpleColliderModule(unsigned long _parent, bool _circle = true) :Module(_parent, ModuleType::simpleCollider) {isCollider = _circle; };
 };
+
 //--------------< Mesh Module >-----------------
 class MeshModule :Module {
 public:
 	Mesh mesh;
 	bool isCollider;
-	bool isTrigger;
 
 	MeshModule() :Module(0, ModuleType::mesh) {};
-	MeshModule(unsigned long _parent) :Module(_parent, ModuleType::mesh) {};
-	MeshModule(unsigned long _parent, Mesh _mesh) :Module(_parent, ModuleType::mesh) { mesh = _mesh; };
+	MeshModule(unsigned long _parent, bool _trigger = false, bool _circle = true) :Module(_parent, ModuleType::mesh) { isCollider = _circle; };
+	MeshModule(unsigned long _parent, Mesh _mesh, bool _collider = true) :Module(_parent, ModuleType::mesh) { mesh = _mesh; isCollider = _collider;};
 };
 //--------------< Sprite Module >---------------
 class SpriteModule :Module {
