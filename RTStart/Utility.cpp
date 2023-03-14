@@ -1,7 +1,7 @@
 #include "Utility.h"
 
 //---------------< fVector >-----------------
-float fVector::returnDistance() {
+float fVector::returnDistance() {//fix this later
 	float x2 = x * x;
 	float y2 = y * y;
 	return sqrt(x2 + y2);
@@ -10,10 +10,11 @@ void fVector::normalize() {
 	float temp = returnDistance();
 	x /= temp;
 	y /= temp;
+	z /= temp;
 }
 
 fVector fVector::returnNormal() {
-	fVector temp = fVector(x, y);
+	fVector temp = fVector(x, y, z);
 	temp.normalize();
 	return temp;
 }

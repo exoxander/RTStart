@@ -11,8 +11,7 @@ struct fVector {
 	float y;
 	float z;
 
-	fVector() { x = 0; y = 0; z = 0; };
-	fVector(float _x, float _y, float _z) { x = _x; y = _y; z = _z; };
+	fVector(float _x = 0, float _y = 0, float _z = 0) { x = _x; y = _y; z = _z; };
 
 	void add(fVector _input) { x += _input.x; y += _input.y; z += _input.z; };
 	void add(float _x, float _y, float _z) { x += _x; y += _y; z += _z; };
